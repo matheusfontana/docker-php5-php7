@@ -1,0 +1,22 @@
+FROM ubuntu:16.04
+
+MAINTAINER Matheus S. Fontana <matheussteinfontana@gmail.com>
+
+RUN apt-get update
+RUN apt-get install -y apache2
+RUN apt-get install -y php
+RUN apt-get install -y libapache2-mod-php
+RUN apt-get install -y php7.0-mbstring
+RUN apt-get install -y vim
+
+RUN rm -rfv /var/www/html/*
+
+EXPOSE 80
+
+CMD service apache2 stop
+
+RUN echo 'date.timezone = America/Sao_Paulo' >> etc/php/7.0/apache2/php.ini
+RUN echo 'display_errors = On' >> etc/php/7.0/apache2/php.ini
+
+ENTRYPOINT service apache2 start && bash
+
